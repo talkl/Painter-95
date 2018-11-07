@@ -4,7 +4,7 @@ var buttons = document.getElementsByClassName("button");
 var shapes = document.getElementsByClassName('shape');
 var eraser = document.getElementById('eraser-image');
 var activeNodes = canvas.getElementsByTagName('div');
-
+var clearButton = document.getElementById('clear-button');
 
 for(var i =0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', changeActiveButton);
@@ -13,6 +13,8 @@ for(var i =0; i < buttons.length; i++) {
 for (var i = 0; i < shapes.length; i++) {
     shapes[i].addEventListener('click', changeActiveShape);
 }
+
+clearButton.addEventListener('click', eliminateNodes);
 
 eraser.addEventListener('click', toggleActiveEraser);
 
@@ -35,6 +37,12 @@ canvas.addEventListener("mousedown", function (e) {
 canvas.addEventListener("mouseup", function (e) {
     canvas.onmousemove = null
 });
+
+function eliminateNodes(e) {
+    do {
+        canvas.removeChild(activeNodes[0]);
+    } while(activeNodes.length > 0);
+}
 
 function toggleActiveEraser(e) {
     if(!eraser.classList.contains('active-eraser')) {
