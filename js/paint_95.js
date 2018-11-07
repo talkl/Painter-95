@@ -1,10 +1,10 @@
 var canvas = document.getElementById("canvas");
-var rect = canvas.getBoundingClientRect();
 var buttons = document.getElementsByClassName("button");
 var shapes = document.getElementsByClassName('shape');
 var eraser = document.getElementById('eraser-image');
 var activeNodes = canvas.getElementsByTagName('div');
 var clearButton = document.getElementById('clear-button');
+var submitButton = document.getElementById('size-form');
 
 for(var i =0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', changeActiveButton);
@@ -14,6 +14,8 @@ for (var i = 0; i < shapes.length; i++) {
     shapes[i].addEventListener('click', changeActiveShape);
 }
 
+submitButton.addEventListener('submit', changeCanvasSize);
+
 clearButton.addEventListener('click', eliminateNodes);
 
 eraser.addEventListener('click', toggleActiveEraser);
@@ -22,7 +24,6 @@ canvas.addEventListener('mouseover', changeToBrushIcon);
 canvas.addEventListener('mouseleave', changeToDefaultIcon );
 
 canvas.addEventListener("mousedown", function (e) {
-    // mouseDownFunction(e);
     
     canvas.onmousemove = function (e) {
         if (eraser.classList.contains('active-eraser')) {
@@ -38,7 +39,15 @@ canvas.addEventListener("mouseup", function (e) {
     canvas.onmousemove = null
 });
 
-function eliminateNodes(e) {
+function changeCanvasSize(e) {
+    e.preventDefault();
+    var userCanvasWidth = document.getElementById('user-canvas-width');
+    var userCanvasHeight = document.getElementById('user-canvas-height');
+    canvas.style.width = `${userCanvasWidth.value}px`;
+    canvas.style.height = `${userCanvasHeight.value}px`;
+}
+
+function eliminateNodes() {
     do {
         canvas.removeChild(activeNodes[0]);
     } while(activeNodes.length > 0);
@@ -74,7 +83,8 @@ function createDivNode() {
     node.style.backgroundColor = `${returnActiveColor()}`;
     return node;
 }
-function eraseOnCanvas(e) { //new code
+function eraseOnCanvas(e) {
+    var rect = canvas.getBoundingClientRect();
     for (let i=0; i < activeNodes.length; i++) {
         var dy = Math.floor(e.clientY - rect.top) - parseInt(activeNodes[i].style.top);
         var dx = Math.floor(e.clientX - rect.left) - parseInt(activeNodes[i].style.left);
@@ -87,6 +97,7 @@ function eraseOnCanvas(e) { //new code
 
 function paintOnCanvas(event) {
     var node = createDivNode();
+    var rect = canvas.getBoundingClientRect();
     var posY = Math.floor(event.clientY - rect.top);
     var posX = Math.floor(event.clientX - rect.left);
     node.style.top = `${posY}px`;
