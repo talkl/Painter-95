@@ -6,6 +6,11 @@ var activeNodes = canvas.getElementsByTagName('div');
 var clearButton = document.getElementById('clear-button');
 var submitButton = document.getElementById('size-form');
 
+// assign the initial computed height and width of the canvas
+
+canvas.style.height = `${parseInt(window.getComputedStyle(canvas, null).getPropertyValue("height"))}px`;
+canvas.style.width = `${parseInt(window.getComputedStyle(canvas, null).getPropertyValue("width"))}px`;
+
 for(var i =0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', changeActiveButton);
 }
@@ -26,10 +31,14 @@ canvas.addEventListener('mouseleave', changeToDefaultIcon );
 canvas.addEventListener("mousedown", function (e) {
     
     canvas.onmousemove = function (e) {
+        var rect = canvas.getBoundingClientRect();
+        
         if (eraser.classList.contains('active-eraser')) {
             eraseOnCanvas(e);
         }
-        else if (document.getElementsByClassName('active-button')[0].classList.contains('active-button')) {
+        else if (document.getElementsByClassName('active-button')[0].classList.contains('active-button')
+            && Math.floor(e.clientY - rect.top) <= (parseInt(canvas.style.height) -10) //in order for the paint to stay inside the canvas
+            && Math.floor(e.clientX - rect.left) <= (parseInt(canvas.style.width) - 10)) { //in order for the paint to stay inside the canvas
             paintOnCanvas(e);
         }
     };
