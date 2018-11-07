@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Spicy+Rice" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/paint_95.css">
+    <!-- Your page title-->
+    <title>Paint 95</title>
+    
+</head>
+
+<body>
+    <div id="controls">
+        <div id="pallet">
+            <button class="button black active-button"></button>
+            <button class="button tomato"></button>
+            <button class="button lightgreen"></button>
+            <button class="button deepskyblue"></button>
+            <button class="button orange"></button>
+            <button class="button darkmagenta"></button>
+            <button class="button mediumslateblue"></button>
+            <button class="button yellow"></button>
+        </div>
+        <div id="stamp">
+            <img class="circle shape active-shape">
+            <img class="square shape">
+            <img class="line shape">
+        </div>
+        <div id="size">
+            <label for="brush-size">Brush Size:</label>
+            <select name="brush-size">
+                <option value="0">Extra Small</option>
+                <option value="5" selected='selected'>Small</option>
+                <option value="15">Medium</option>
+                <option value="25">Large</option>
+            </select>
+        </div>
+        <div id="eraser-container">
+            <img id="eraser-image" src="media/non-active-eraser.png" alt="eraser"/>  
+        </div>
+        <div id="clear">
+            <input id="clear-button" type="button" value="clear"/>
+        </div>
+    </div>
+    <div id="canvas-container">
+        <div id="canvas"></div>
+    </div>    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./js/paint_95.js"></script>
+</body>
+
+</html>

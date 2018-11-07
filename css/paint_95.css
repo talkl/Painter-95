@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    display: flex;
+}
+#canvas-container {
+    width: 75vw;
+    height: 100vh;
+    background: wheat;
+    position: relative;
+}
+#canvas {
+    height: 500px;
+    width: 500px;
+    background: white;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    display: inline-block;
+}
+#controls {
+    background: rgb(247, 239, 239);
+    width: 25vw;
+    height: 100vh;
+    text-align: center;
+}
+#pallet {
+    width: 70%;
+    display: inline-block;
+}
+.button, button:focus { 
+    border: 1px solid black;
+    padding: 40px;
+    display: inline-block;
+    margin: 10px 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    outline: 0;
+}
+.button.black {
+    background-color: black;
+}
+.button.tomato {
+    background-color: tomato;
+}
+.button.lightgreen {
+    background-color: lightgreen;
+}
+.button.deepskyblue {
+    background-color: deepskyblue;
+}
+.button.orange {
+    background-color: orange;
+}
+.button.darkmagenta {
+    background-color: darkmagenta;
+}
+.button.mediumslateblue {
+    background-color: mediumslateblue;
+}
+.button.yellow {
+    background-color: yellow;
+}
+.active-button, button:focus {
+    box-shadow: 0 0 0 4px white inset;
+    outline: 0;
+}
+#stamp {
+    margin: 20px 0;
+    height: 40px;
+}
+.shape {
+    margin: 0 10px;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+}
+.circle {
+    content:url("../media/non-active-circle.png");
+
+}
+.square {
+    content:url("../media/none-active-square.png");
+
+}
+.line {
+    content:url("../media/non-active-line.png");
+
+}
+
+.circle.active-shape {
+    content:url("../media/active-circle.png");
+}
+.square.active-shape {
+    content:url("../media/active-square.png");
+}
+.line.active-shape {
+    content:url("../media/active-line.png");
+}
+#eraser-container {
+    margin: 20px 0;
+}
+#eraser-image {
+    cursor: pointer;
+}
+.active-eraser {
+    content: url('../media/eraser.png')
+}
+#clear-button {
+    height: 50px;
+    width: 100px;
+    font-size: 1.6em;
+}
