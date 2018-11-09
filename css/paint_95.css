@@ -28,14 +28,21 @@ body {
     width: 70%;
     display: inline-block;
 }
+#color-picker{
+    margin: 20px 0;
+}
+#color-input {
+    cursor: pointer;
+}
 .button, button:focus { 
     border: 1px solid black;
-    padding: 40px;
+    padding: 30px;
     display: inline-block;
     margin: 10px 10px;
     cursor: pointer;
     border-radius: 50%;
     outline: 0;
+    color: #ff1493
 }
 .button.black {
     background-color: black;
@@ -117,4 +124,7 @@ body {
 }
 #canvas-size {
     margin: 15px 0;
+}
+.active-color-input {
+    background-color: black;
 }

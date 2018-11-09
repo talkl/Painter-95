@@ -5,6 +5,7 @@ var eraser = document.getElementById('eraser-image');
 var activeNodes = canvas.getElementsByTagName('div');
 var clearButton = document.getElementById('clear-button');
 var submitButton = document.getElementById('size-form');
+var colorPicker = document.getElementById('color-input');
 
 // assign the initial computed height and width of the canvas
 
@@ -18,6 +19,20 @@ for(var i =0; i < buttons.length; i++) {
 for (var i = 0; i < shapes.length; i++) {
     shapes[i].addEventListener('click', changeActiveShape);
 }
+
+colorPicker.addEventListener('click', function(e) {
+    if (eraser.classList.contains('active-eraser')) {
+        eraser.classList.remove('active-eraser');
+    }
+    if (document.getElementsByClassName('active-button').length !== 0) {
+        var active_button = document.getElementsByClassName('active-button')[0];
+        active_button.classList.remove('active-button');
+    }
+    if(!colorPicker.classList.contains('active-color-input')) {
+        colorPicker.classList.add('active-color-input');
+    }
+});
+
 
 submitButton.addEventListener('submit', changeCanvasSize);
 
@@ -36,8 +51,7 @@ canvas.addEventListener("mousedown", function (e) {
         if (eraser.classList.contains('active-eraser')) {
             eraseOnCanvas(e);
         }
-        else if (document.getElementsByClassName('active-button')[0].classList.contains('active-button')
-            && Math.floor(e.clientY - rect.top) <= (parseInt(canvas.style.height) -10) //in order for the paint to stay inside the canvas
+        else if (Math.floor(e.clientY - rect.top) <= (parseInt(canvas.style.height) -10) //in order for the paint to stay inside the canvas
             && Math.floor(e.clientX - rect.left) <= (parseInt(canvas.style.width) - 10)) { //in order for the paint to stay inside the canvas
             paintOnCanvas(e);
         }
@@ -65,8 +79,13 @@ function eliminateNodes() {
 function toggleActiveEraser(e) {
     if(!eraser.classList.contains('active-eraser')) {
         eraser.classList.add('active-eraser');
-        var active_button = document.getElementsByClassName('active-button')[0];
-        active_button.classList.remove('active-button');
+        if (document.getElementsByClassName('active-button').length !== 0) {
+            var active_button = document.getElementsByClassName('active-button')[0];
+            active_button.classList.remove('active-button');
+        }
+        if (colorPicker.classList.contains('active-color-input')) {
+            colorPicker.classList.remove('active-color-input');
+        }
     }
 }
 
@@ -117,6 +136,12 @@ function changeActiveButton() {
     if (eraser.classList.contains('active-eraser')) {
         eraser.classList.remove('active-eraser');
         this.classList.add('active-button');
+    }
+    if (colorPicker.classList.contains('active-color-input')) {
+        colorPicker.classList.remove('active-color-input');
+    }
+    if (document.getElementsByClassName('active-button').length === 0) {
+        this.classList.add('active-button');
     } else {
         var active_button = document.getElementsByClassName('active-button')[0];
         active_button.classList.remove('active-button');
@@ -129,9 +154,13 @@ function changeActiveShape() {
     this.classList.add('active-shape');
 }
 function returnActiveColor() {
-    var active_button = document.getElementsByClassName('active-button')[0];
-    var active_button_color = window.getComputedStyle(active_button).getPropertyValue('background-color');
-    return `${active_button_color}`;
+    if (document.getElementsByClassName('active-button').length === 0) {
+        return colorPicker.value;
+    } else {
+        var active_button = document.getElementsByClassName('active-button')[0];
+        var active_button_color = window.getComputedStyle(active_button).getPropertyValue('background-color');
+        return `${active_button_color}`;
+    }
 }
 function returnActiveShape() {
     var active_shape = document.getElementsByClassName('active-shape')[0];
