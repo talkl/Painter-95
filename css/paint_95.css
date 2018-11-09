@@ -1,10 +1,10 @@
 body {
     margin: 0;
     display: flex;
+    background: rgb(247, 239, 239);
 }
 #canvas-container {
     width: 75vw;
-    height: 100vh;
     background: wheat;
     position: relative;
 }
@@ -21,7 +21,6 @@ body {
 #controls {
     background: rgb(247, 239, 239);
     width: 25vw;
-    height: 100vh;
     text-align: center;
 }
 #pallet {
@@ -115,9 +114,13 @@ body {
     content: url('../media/eraser.png')
 }
 #clear-button {
-    height: 50px;
+    height: 40px;
     width: 100px;
     font-size: 1.6em;
+    background-color: orange;
+    color: white;
+    font-weight: 400;
+    outline: 0;
 }
 #clear-button:hover {
     box-shadow: 0 0 0 2px black inset;
@@ -127,4 +130,19 @@ body {
 }
 .active-color-input {
     background-color: black;
+}
+#storage-div {
+    margin-top: 10px;
+}
+.storage-button {
+    padding: 5px;
+    width: 100px;
+    background-color: rgb(72, 119, 222);
+    color: white;
+    font-weight: 400;
+    margin: 0 5px;
+    outline: 0;
+}
+.storage-button:hover {
+    box-shadow: 0 0 0 2px black inset;
 }

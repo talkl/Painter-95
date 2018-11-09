@@ -6,7 +6,8 @@ var activeNodes = canvas.getElementsByTagName('div');
 var clearButton = document.getElementById('clear-button');
 var submitButton = document.getElementById('size-form');
 var colorPicker = document.getElementById('color-input');
-
+var saveButton = document.getElementById('save-button');
+var loadButton = document.getElementById('load-button');
 // assign the initial computed height and width of the canvas
 
 canvas.style.height = `${parseInt(window.getComputedStyle(canvas, null).getPropertyValue("height"))}px`;
@@ -33,6 +34,8 @@ colorPicker.addEventListener('click', function(e) {
     }
 });
 
+loadButton.addEventListener('click', load);
+saveButton.addEventListener('click', save);
 
 submitButton.addEventListener('submit', changeCanvasSize);
 
@@ -71,9 +74,9 @@ function changeCanvasSize(e) {
 }
 
 function eliminateNodes() {
-    do {
+    while(activeNodes.length > 0) {
         canvas.removeChild(activeNodes[0]);
-    } while(activeNodes.length > 0);
+    }
 }
 
 function toggleActiveEraser(e) {
@@ -191,6 +194,46 @@ function returnActiveSize() {
     console.log(brush_size);
     var active_brush_size = brush_size['0'].options[brush_size['0']['selectedIndex']].value + 'px';
     return active_brush_size;
+}
+
+function save() {
+    var canvasLeftBound = canvas.getBoundingClientRect().left;
+    var canvasTopBound = canvas.getBoundingClientRect().top;
+    var SavedDrawingObj = {};
+    SavedDrawingObj["paintNodes"] = [];
+    for( let i = 0; i < activeNodes.length; i++) {
+        var nodeObj = {};
+        nodeObj["top"] = activeNodes[i].getBoundingClientRect().top - canvasTopBound;
+        nodeObj["left"] = activeNodes[i].getBoundingClientRect().left - canvasLeftBound;
+        nodeObj["width"] = activeNodes[i].style.width;
+        nodeObj["height"] = activeNodes[i].style.height;
+        nodeObj["borderRadius"] = activeNodes[i].style.borderRadius;
+        nodeObj["padding"] = activeNodes[i].style.padding;
+        nodeObj["backgroundColor"] = activeNodes[i].style.backgroundColor;
+        SavedDrawingObj["paintNodes"].push(nodeObj);
+    }
+    localStorage.setItem('drawing', JSON.stringify(SavedDrawingObj));
+    alert('Drawing Saved');
+}
+
+function load() {
+    var loadedDrawingObj = JSON.parse(localStorage.getItem('drawing'));
+    eliminateNodes(); //clearing the canvas before loading
+    for (let i = 0; i < loadedDrawingObj["paintNodes"].length; i++) {
+        var node = document.createElement('div');
+        node.style.display = 'inline-block';
+        node.style.position = "absolute";
+        node.style.width = loadedDrawingObj["paintNodes"][i]["width"];
+        node.style.height = loadedDrawingObj["paintNodes"][i]["height"];
+        node.style.borderRadius = loadedDrawingObj["paintNodes"][i]["borderRadius"];
+        node.style.padding = loadedDrawingObj["paintNodes"][i]["padding"];
+        node.style.backgroundColor = loadedDrawingObj["paintNodes"][i]["backgroundColor"];
+        node.style.top = loadedDrawingObj["paintNodes"][i]["top"] + 'px';
+        node.style.left = loadedDrawingObj["paintNodes"][i]["left"] + 'px';
+        canvas.appendChild(node);
+    }
+    alert('Drawing loaded');
+
 }
 
 /*
